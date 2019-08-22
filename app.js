@@ -9,7 +9,6 @@ const MongoStore = require('connect-mongo')(session);
 const bodyParser = require('body-parser');
 const path = require('path');
 
-
 app.use(cors({
     origin: true,
     credentials: true
