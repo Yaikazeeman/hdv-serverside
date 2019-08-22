@@ -7,6 +7,7 @@ const cors = require('cors')
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const bodyParser = require('body-parser');
+const path = require('path');
 
 
 app.use(cors({
@@ -18,7 +19,7 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true })
     .then((x) => {
         console.log(`database name: ${x.connections[0].name}`);
     }).catch(err => {
-        console.log('error', err);
+        console.log('error connecting to mongo', err);
     });
 
 //setting the session cookie
@@ -36,6 +37,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: false
 }));
+
+app.use(express.static(path.join(__dirname,'public')))
 
 app.use(function(req, res, next) {
     if (req.session.user) res.locals.user = req.session.user;
@@ -60,5 +63,9 @@ const edit = require('./routes/edit')
 app.use('/', edit);
 // const delete = require('./routes/delete')
 app.use('/', require('./routes/delete'));
+
+app.use((req, res, next) => {
+    res.sendFile(__dirname + "/public/index.html");
+  });
 
 app.listen(process.env.PORT, () => { console.log(`app listening on port ${process.env.PORT}`) })
