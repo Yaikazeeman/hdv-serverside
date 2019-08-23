@@ -13,7 +13,7 @@ let id = req.body.id
 let splitRental,splitMeal;
 if(req.body.rental.indexOf(',')> 0){
     splitRental = req.body.rental.split(",")
-}else if(req.body.meal.length>0){
+}else if(req.body.rental.length>0){
     splitRental = [req.body.rental]
 }else{
    splitRental=[]
