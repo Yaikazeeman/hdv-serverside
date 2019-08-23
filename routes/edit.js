@@ -10,14 +10,22 @@ router.use(bodyParser.urlencoded({
 
 router.post('/edit', (req, res, next) => {
 let id = req.body.id
-let splitRental;
-if(req.body.rental){
+let splitRental,splitMeal;
+if(req.body.rental.indexOf(',')> 0){
     splitRental = req.body.rental.split(",")
-}
-else{
+}else if(req.body.meal.length>0){
+    splitRental = [req.body.rental]
+}else{
    splitRental=[]
 }
-let splitMeal = req.body.rental.split(",")
+
+if(req.body.meal.indexOf(',')>0){
+    splitMeal = req.body.meal.split(",")
+} else if (req.body.meal.length>0){
+    splitMeal = [req.body.meal]
+}else{
+    splitMeal=[]
+}
     let editOrder = ({
         name: req.body.name,
         phoneNumber: req.body.phoneNumber,
