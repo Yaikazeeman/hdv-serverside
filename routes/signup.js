@@ -20,7 +20,6 @@ router.post('/signup', (req, res, next) => {
         newUser.save()
             .then((data)=>{
                 res.json(data)
-                console.log("profile is saved... or is it??")
             })
             .catch((err) => {
                 console.log("something went wrong")
